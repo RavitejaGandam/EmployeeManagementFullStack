@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function Home() {
   let [employess, setEmployees] = useState([]);
 
+  let { id } = useParams();
   let loadEmployees = async () => {
     let result = await axios.get(
-      ` http://localhost:8080/grtsolutions/getAllEmployees`
+      `http://localhost:8080/grtsolutions/getAllEmployees`
     );
     console.log(result.data);
     setEmployees(result.data);
@@ -15,6 +16,14 @@ function Home() {
   useEffect(() => {
     loadEmployees();
   }, []);
+
+  let handleDelete = async (id) => {
+    let res = await axios.delete(
+      `http://localhost:8080/grtsolutions/deleteEmployee/${id}`
+    );
+    console.log(res.data);
+    loadEmployees();
+  };
   return (
     <div className="container">
       <div className="py-4">
@@ -32,7 +41,7 @@ function Home() {
             {employess.map((employee, index) => (
               <tr>
                 <th scope="row" key={index}>
-                  {employee.id}
+                  {index + 1}
                 </th>
                 <td>{employee.userName}</td>
                 <td>{employee.name}</td>
@@ -44,7 +53,12 @@ function Home() {
                       Edit
                     </button>
                   </Link>
-                  <button className="btn btn-danger mx-2">Delete</button>
+                  <button
+                    className="btn btn-danger mx-2"
+                    onClick={() => handleDelete(employee.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const EditEmployee = () => {
@@ -9,6 +9,7 @@ const EditEmployee = () => {
     userName: "",
     email: "",
   });
+  let navigate = useNavigate();
   let { name, userName, email } = employee;
   let { id } = useParams();
   let handleChange = (e) => {
@@ -20,6 +21,7 @@ const EditEmployee = () => {
         `http://localhost:8080/grtsolutions/employees/${id}`,
         employee
       );
+      navigate("/");
       console.log(response.data);
     } catch (error) {
       console.log("error occured", error);

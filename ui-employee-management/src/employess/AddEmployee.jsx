@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AddEmployee() {
   let [employee, setEmployee] = useState({
@@ -8,6 +8,7 @@ export default function AddEmployee() {
     userName: "",
     email: "",
   });
+  let navigate = useNavigate();
   let { name, userName, email } = employee;
   let handleChange = (e) => {
     setEmployee({ ...employee, [e.target.name]: e.target.value });
@@ -19,6 +20,7 @@ export default function AddEmployee() {
         employee
       );
       console.log(response.data);
+      navigate("/");
     } catch (error) {
       console.log("error occured", error);
     }
