@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Home() {
   let [employess, setEmployees] = useState([]);
 
-  let { id } = useParams();
+  //let { id } = useParams();
   let loadEmployees = async () => {
     let result = await axios.get(
       `http://localhost:8080/grtsolutions/getAllEmployees`
@@ -39,7 +39,7 @@ function Home() {
           </thead>
           <tbody>
             {employess.map((employee, index) => (
-              <tr>
+              <tr key={employee.id}>
                 <th scope="row" key={index}>
                   {index + 1}
                 </th>
@@ -47,7 +47,12 @@ function Home() {
                 <td>{employee.name}</td>
                 <td>{employee.email}</td>
                 <td>
-                  <button className="btn btn-secondary mx-2">View</button>
+                  <Link
+                    to={`/view/${employee.id}`}
+                    className="btn btn-secondary mx-2"
+                  >
+                    View
+                  </Link>
                   <Link to={`/edit/${employee.id}`}>
                     <button className="btn btn-outline-primary mx-2">
                       Edit
