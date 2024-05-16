@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Home() {
   let [employess, setEmployees] = useState([]);
@@ -13,7 +14,7 @@ function Home() {
   };
   useEffect(() => {
     loadEmployees();
-  }, [employess]);
+  }, []);
   return (
     <div className="container">
       <div className="py-4">
@@ -31,14 +32,18 @@ function Home() {
             {employess.map((employee, index) => (
               <tr>
                 <th scope="row" key={index}>
-                  {index + 1}
+                  {employee.id}
                 </th>
                 <td>{employee.userName}</td>
                 <td>{employee.name}</td>
                 <td>{employee.email}</td>
                 <td>
                   <button className="btn btn-secondary mx-2">View</button>
-                  <button className="btn btn-outline-primary mx-2">Edit</button>
+                  <Link to={`/edit/${employee.id}`}>
+                    <button className="btn btn-outline-primary mx-2">
+                      Edit
+                    </button>
+                  </Link>
                   <button className="btn btn-danger mx-2">Delete</button>
                 </td>
               </tr>
