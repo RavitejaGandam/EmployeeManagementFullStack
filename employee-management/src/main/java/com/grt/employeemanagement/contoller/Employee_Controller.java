@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/grtsolutions")
+@CrossOrigin
 public class Employee_Controller {
 
     @Autowired
